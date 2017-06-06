@@ -1,0 +1,67 @@
+Interview Coding Test
+
+This test is not intended just as a test of coding ability, but also of how you think and organize things. We want to get a sense of what we would see if you were actually committing code in our environment.  To that end, please treat this as a production problem.  Abstractions, tests, design choices, efficiency, and general professionalism will all be considered when evaluating the test. We are not specifying a time limit to allow for more attention to detail in meeting the requirements. Please include all all necessary source and project files (including dependencies, if applicable) to build, test, and execute the solution.
+
+######## Code Test Problem 1) Unique permutations of a string
+
+In a language of your choice, write a command line utility that given a string as an input will print out all unique permutations of that string. Example inputs to consider are "aaa", "cake", and "banana".
+Please include a means of building and/or packaging your utility for distribution to other systems using whatever build technologies that work for you and/or the language you've chosen.
+
+######## Code Test Problem 2) Log Redaction
+
+Scenario: One of our customers has been inadvertently uploading sensitive personally-identifying information (PII) to our system over a period of several months. The customer has since realized their mistake and removed the data from the system, but some of that information was reflected in debugging logs enabled on the system and will need to be removed. The logs in question are archived to a central location and compressed with the gzip utility.
+
+Scope/Assumptions: We are only concerned with the archived logs. Backups, application data and any other storage locations may assumed to have been addressed separately. You may assume that each line of each input log file contains data from one and only one customer record. All relevant log files may assumed to be local to the script being run (i.e. located on the same system).
+
+Requirements: 
+ - The solution must accept as input one or more text log files that have been compressed with the gzip algorithm.
+ - For each input file, the solution must produce a redacted copy of the file that has been compressed with the gzip algorithm.
+ - The solution must also create an audit log that includes the name of each file processed, a count of the total number of lines processed in each log file, and a count of the total number of lines redacted from each log file. The audit log may additionally contain any other information you feel is pertinent. The audit log must not contain any information from the redacted lines.
+ - The solution must not alter logs in-place, as we will want to verify that they have not been corrupted before replacing the originals.
+ - The solution must redact all log lines containing sensitive data as identified in the sample data provided.
+ - The solution must contain clear code comments explaining its usage and internal operations.
+ - The solution must be able to reliably process hundreds or thousands of log files containing 512 MiB or more of uncompressed log entries per file.
+
+Preferences:
+ - The ideal solution will be cognizant of CPU, RAM and storage limitations and strive to use said resources efficiently while still processing log files as quickly as possible.
+ - The ideal solution will preserve as much metadata (e.g. date/time stamps, file ownership, file permissions, etc.) as possible from the original log files in the redacted copies.
+ - The ideal solution will be flexible enough to address similar needs in the future with minimal rework.
+
+Example Data: Lines containing social security numbers and credit card numbers should be redacted.
+-------------
+2016-12-11 21:59:37 Account: 1783 Added record: 42153 Fields: Content="Informational Pamphlet", Title="Eggs: Where to put them all?", Industry="Basket weaving", FirstName="Fred", LastName="Flintstone"
+2016-12-11 22:03:07 Account: 1783 Updated Record: 22533 Fields: Content="Bulletin", Title="Nonsense News", Industry="Technology", FirstName="Fred", LastName="Flintstone"
+2016-12-11 22:04:31 Account: 2557 Deleted record: 75854
+2016-12-11 22:07:19 Account: 1783 Added record: 25744 Fields: Content="Newsletter", Title="Froglegs Weekly", Industry="Food service", FirstName="Fred", LastName="Flintstone"
+2016-12-11 22:15:01 Account: 2557 Updated Record: 28437 Fields: Content="Bulletin", Title="Nonsense News", Industry="Technology", FirstName="Fred", LastName="Flintstone"
+2016-12-11 22:19:55 Account: 1783 Updated Record: 27665 Fields: Content="Bulletin", Title="Nonsense News", Industry="Technology", FirstName="Fred", LastName="Flintstone"
+2016-12-11 22:23:25 Account: 3618 Deleted record: 78721
+2016-12-11 22:27:37 Account: 1783 Added record: 44114 Fields: Content="Newsletter", Title="Froglegs Weekly", Industry="Food service", FirstName="Fred", LastName="Flintstone"
+2016-12-11 22:33:13 Account: 3618 Updated Record: 77807 Fields: Content="Newsletter", Title="Froglegs Weekly", Industry="Food service", FirstName="Fred", LastName="Flintstone"
+2016-12-11 22:35:19 Account: 3618 Updated Record: 23174 Fields: Content="Payment", Type="Mortgage", Industry="Finance", FirstName="Fred", LastName="Flintstone", SSN="620-07-3092"
+2016-12-11 22:43:01 Account: 1783 Deleted record: 59552
+2016-12-11 22:47:55 Account: 2557 Deleted record: 86404
+2016-12-11 22:55:37 Account: 1783 Updated Record: 18397 Fields: Content="Newsletter", Title="Froglegs Weekly", Industry="Food service", FirstName="Fred", LastName="Flintstone"
+2016-12-11 22:59:07 Account: 1783 Updated Record: 31495 Fields: Content="Informational Pamphlet", Title="Eggs: Where to put them all?", Industry="Basket weaving", FirstName="Fred", LastName="Flintstone"
+2016-12-11 23:07:31 Account: 2557 Updated Record: 61163 Fields: Content="Newsletter", Title="Froglegs Weekly", Industry="Food service", FirstName="Fred", LastName="Flintstone"
+2016-12-11 23:14:31 Account: 1783 Deleted record: 58138
+2016-12-11 23:16:37 Account: 1783 Added record: 65332 Fields: Content="Bulletin", Title="Nonsense News", Industry="Technology", FirstName="Fred", LastName="Flintstone"
+2016-12-11 23:25:01 Account: 1783 Added record: 58562 Fields: Content="Informational Pamphlet", Title="Eggs: Where to put them all?", Industry="Basket weaving", FirstName="Fred", LastName="Flintstone"
+2016-12-11 23:30:37 Account: 3618 Deleted record: 50866
+2016-12-11 23:40:25 Account: 2557 Updated Record: 36261 Fields: Content="Informational Pamphlet", Title="Eggs: Where to put them all?", Industry="Basket weaving", FirstName="Fred", LastName="Flintstone"
+2016-12-11 23:45:19 Account: 1783 Updated Record: 61328 Fields: Content="Informational Pamphlet", Title="Eggs: Where to put them all?", Industry="Basket weaving", FirstName="Fred", LastName="Flintstone"
+2016-12-11 23:53:01 Account: 2557 Updated Record: 24753 Fields: Content="Newsletter", Title="Froglegs Weekly", Industry="Food service", FirstName="Fred", LastName="Flintstone"
+2016-12-12 00:02:07 Account: 1783 Added record: 46679 Fields: Content="Newsletter", Title="Froglegs Weekly", Industry="Food service", FirstName="Fred", LastName="Flintstone"
+2016-12-12 00:04:13 Account: 3618 Deleted record: 52633
+2016-12-12 00:05:37 Account: 3618 Updated Record: 52571 Fields: Content="Payment", Type="Mortgage", Industry="Finance", FirstName="Fred", LastName="Flintstone", CC="5424-9259-6687-3767"
+2016-12-12 00:15:25 Account: 2557 Added record: 49334 Fields: Content="Newsletter", Title="Froglegs Weekly", Industry="Food service", FirstName="Fred", LastName="Flintstone"
+2016-12-12 00:16:49 Account: 1783 Updated Record: 44668 Fields: Content="Bulletin", Title="Nonsense News", Industry="Technology", FirstName="Fred", LastName="Flintstone"
+2016-12-12 00:25:13 Account: 2557 Updated Record: 18279 Fields: Content="Bulletin", Title="Nonsense News", Industry="Technology", FirstName="Fred", LastName="Flintstone"
+2016-12-12 00:31:31 Account: 1783 Updated Record: 19162 Fields: Content="Bulletin", Title="Nonsense News", Industry="Technology", FirstName="Fred", LastName="Flintstone"
+2016-12-12 00:40:37 Account: 2557 Added record: 10327 Fields: Content="Informational Pamphlet", Title="Eggs: Where to put them all?", Industry="Basket weaving", FirstName="Fred", LastName="Flintstone"
+2016-12-12 00:48:19 Account: 3618 Updated Record: 57685 Fields: Content="Bulletin", Title="Nonsense News", Industry="Technology", FirstName="Fred", LastName="Flintstone"
+2016-12-12 00:54:37 Account: 2557 Deleted record: 27657
+2016-12-12 01:03:01 Account: 2557 Deleted record: 41043
+2016-12-12 01:09:19 Account: 3618 Added record: 86329 Fields: Content="Payment", Type="Mortgage", Industry="Finance", FirstName="Fred", LastName="Flintstone", SSN="620-07-3092"
+2016-12-12 01:16:19 Account: 3618 Updated Record: 85714 Fields: Content="Quote", Type="Auto", Industry="Insurance", FirstName="Fred", LastName="Flintstone", SSN="620-07-3092"
+-------------
