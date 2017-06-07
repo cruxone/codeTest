@@ -27,5 +27,5 @@ def main():
         if args[1]:
             print(permutate(args[1]))
     except:
-        print("lel")
+        print("Please supply an argument")
 main()
