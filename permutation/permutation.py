@@ -15,7 +15,9 @@ def permutate(toPerm):
     for perm in permutations:
         #print(perm)
         for i in range(len(perm)+1):
-            possible.append(perm[:i] + firstChar + perm[i:])
+            newPerm = perm[:i] + firstChar + perm[i:]
+            if newPerm not in possible:
+                possible.append(newPerm)
     return possible
 
 
