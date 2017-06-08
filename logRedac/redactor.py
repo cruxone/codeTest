@@ -16,33 +16,27 @@ def copyFile(srcFile):
 
 def gunzipFile(log):
     # will gunzip file, and then call redact with gunzipped file.
-    print("gunzip called")
     regex = r"\d{3}-\d{2}-\d{4}"
-    counter = 0
-    redactCount = 0
+    # open file in read mode to grab contents
     openFile = gzip.open(log, 'rb')
     contents = openFile.readlines()
+    # close read file
     openFile.close()
+    # open file in write mode
     openFile = gzip.open(log, 'w')
+    # sort through contents
     for line in contents:
+        # if the search term is not found, the line will be written to the new file.
+        # This takes care of duplicates in the same line as well.
         socialMatch = re.search(regex, line)
         if not socialMatch:
             openFile.write(line)
         else:
             counter = counter + 1
     print("sensitive data found: {} times.".format(counter))
-    #openFile.close()
+    # close write mode file
+    openFile.close()
 
-    # with gzip.open(log, 'rb') as f:
-    #     for line in f.readlines():
-    #         counter = counter + 1
-    #         socialMatch = re.search("Fred", line)
-    #         #socialReplace = re.sub(EX, 'xxx-xxx-xxxx', line)
-    #         if socialMatch:
-    #             redactCount = redactCount + 1
-    #             print("Fred found")
-    #     print(redactCount)
-    #     print(counter)
 #def redact(line, counter):
     #will redact documents and log
     # FOR LOGGING: log name of file redacted, total lines, and lines redacted
