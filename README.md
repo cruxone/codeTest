@@ -18,3 +18,6 @@ To run, simply run as you would any python script:
 python redactor.py /some/directory/ log1.gz log2.gz
 ```
 An audit.log file with be placed where the script was ran, and will show the name of logs redacted, and line counts. 
+This has been tested using mutliple files that when gunzipped are roughly 730mb per file and takes about 42 seconds per file of that size, while consuming about 5 mb of memory. 
+
+TODO: write this in go and post some generic performance differences. 
